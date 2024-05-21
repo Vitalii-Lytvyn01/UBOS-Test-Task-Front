@@ -1,0 +1,6 @@
+export const screens = {
+  "PRODUCTS": "PRODUCTS",
+  "CATEGORIES": "CATEGORIES",
+  "ORDERS": "ORDERS",
+  "PLACE_ORDER": "PLACE_ORDER"
+}
