@@ -16,6 +16,6 @@ export type Order = {
   "product_id": string,
   "quantity": number,
   "customer": string,
-  "order_date": string,
+  "date": string,
   "cost": number,
 }

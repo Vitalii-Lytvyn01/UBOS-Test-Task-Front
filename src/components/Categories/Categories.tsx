@@ -1,9 +1,9 @@
-import './Orders.scss';
+import './Categories.scss';
 import { useContext, useEffect, useState } from 'react';
 import { api } from '../../utility/api';
 import { Category, Product } from '../../utility/types';
 
-export function Orders() {
+export function Categories() {
   const [categoryList, setCategoryList] = useState<Category[]>([]);
   const [refetch, setRefetch] = useState(false);
   const [openForm, setOpenForm] = useState(false);
@@ -65,7 +65,7 @@ export function Orders() {
     </div>
   })
 
-  return <div className="orders_list">
+  return <div className="categories_list">
     <div className="buttons-container">
       <button
         onClick={() => handleOpenEdit(undefined,"Add")}

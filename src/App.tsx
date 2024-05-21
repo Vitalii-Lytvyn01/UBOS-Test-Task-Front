@@ -3,13 +3,15 @@ import './App.scss'
 import { screens } from './utility/shorthands'
 import { OrderContext } from './state/OrderContext';
 import { Products } from './components/Products/Products';
-import { Orders } from './components/Categories/Orders';
+import { Categories } from './components/Categories/Categories';
+import { Orders } from './components/Orders/Orders';
+import { Product } from './utility/types';
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState(screens.PRODUCTS);
-  const [order, setOrder] = useState<Object[]>([]);
+  const [order, setOrder] = useState<Product[]>([]);
 
-  const handleSetOrder = (productOrder: Array<Object>) => {
+  const handleSetOrder = (productOrder: Array<Product>) => {
     console.log(productOrder);
     setOrder(productOrder);
   }
@@ -19,9 +21,9 @@ function App() {
       case screens.PRODUCTS: 
         return <Products handleSetOrder={handleSetOrder}/>
       case screens.CATEGORIES: 
-        return <Orders/>
+        return <Categories />
       case screens.ORDERS: 
-        return <div>ORDERS</div>
+        return <Orders handleSetOrder={handleSetOrder}/>
       case screens.PLACE_ORDER: 
         return <div>PLACE_ORDER</div>
       default:
@@ -32,9 +34,9 @@ function App() {
   return (
     <OrderContext.Provider value={order}>
       <div className="navigation">
-        <button onClick={() => setCurrentScreen(screens.PRODUCTS)}>PRODUCTS</button>
+        <button onClick={() => setCurrentScreen(screens.PRODUCTS)}>PRODUCTS ({order.length} in Cart)</button>
         <button onClick={() => setCurrentScreen(screens.CATEGORIES)}> CATEGORIES</button>
-        <button onClick={() => setCurrentScreen(screens.ORDERS)}>ORDERS</button>
+        <button onClick={() => setCurrentScreen(screens.ORDERS)}>ORDERS </button>
       </div>
       {displayFunction(currentScreen)}
     </OrderContext.Provider>

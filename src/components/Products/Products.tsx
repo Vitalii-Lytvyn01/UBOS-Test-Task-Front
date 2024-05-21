@@ -24,7 +24,9 @@ export function Products(props: { handleSetOrder: any; }) {
   },[refetch]);
 
   function handleAddToOrder(product: Product) {
-    handleSetOrder([...order, product])
+    if(order.findIndex(item => item._id === product._id) === -1) {
+      handleSetOrder([...order, product]);
+    }
   }
 
   function handleOpenEdit(product: Product | undefined, action: string) {
