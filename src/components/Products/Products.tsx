@@ -48,8 +48,8 @@ export function Products(props: { handleSetOrder: any; }) {
       case "Add": 
         api.post("products", {
           "name": nameInput.value,
-          "price": priceInput.value,
-          "quantity": quantityInput.value,
+          "price": parseInt(priceInput.value),
+          "quantity": parseInt(quantityInput.value),
           "category_id": categoryInput.value,
         }).then(data => {
           console.log(data.json());
@@ -60,8 +60,8 @@ export function Products(props: { handleSetOrder: any; }) {
       case "Edit":
         api.put("products", {
           "name": nameInput.value,
-          "price": priceInput.value,
-          "quantity": quantityInput.value,
+          "price": parseInt(priceInput.value),
+          "quantity": parseInt(quantityInput.value),
           "category_id": categoryInput.value,
           "_id": editProduct?._id
         }).then(data => {
