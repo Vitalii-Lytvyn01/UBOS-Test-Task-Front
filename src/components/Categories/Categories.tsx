@@ -1,7 +1,7 @@
 import './Categories.scss';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { api } from '../../utility/api';
-import { Category, Product } from '../../utility/types';
+import { Category } from '../../utility/types';
 
 export function Categories() {
   const [categoryList, setCategoryList] = useState<Category[]>([]);
