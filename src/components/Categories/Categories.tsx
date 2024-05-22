@@ -9,6 +9,7 @@ export function Categories() {
   const [openForm, setOpenForm] = useState(false);
   const [actionCategory, setActionCategory] = useState("Edit");
   const [editCategory, setEditCategory] = useState<Category>();
+  const [nameFilter, setNameFilter] = useState('');
 
   useEffect(() => {
     console.log('useEffect');
@@ -21,6 +22,12 @@ export function Categories() {
     setOpenForm(!openForm);
     setActionCategory(action);
     setEditCategory(item);
+  }
+
+  function useFilters():Category[]  {
+    let result = categoryList.filter(item => item.name.toLowerCase().includes(nameFilter.toLowerCase()));
+
+    return result;
   }
 
   function handleSubmit(e: React.SyntheticEvent) {
@@ -54,7 +61,7 @@ export function Categories() {
     }
   }
 
-  let categories = categoryList.map(item => {
+  let categories = useFilters().map(item => {
     return <div className="list_item" key={item._id}>
       <div className="list_item__name">
         Name: {item.name}
@@ -67,6 +74,15 @@ export function Categories() {
 
   return <div className="categories_list">
     <div className="buttons-container">
+      <div className="filters-container">
+        <input
+          className='text-input input'
+          type="text"
+          value={nameFilter}
+          placeholder='Search by name'
+          onChange={(e) => setNameFilter(e.target.value)}
+        />
+      </div>
       <button
         onClick={() => handleOpenEdit(undefined,"Add")}
         >{openForm ? "Product List" : "Add Product"}</button>

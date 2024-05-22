@@ -11,6 +11,7 @@ export function Orders(props: { handleSetOrder: any; }) {
   const [productList, setProductList] = useState<Product[]>([]);
   const [refetch, setRefetch] = useState(false);
   const [openForm, setOpenForm] = useState(false);
+  const [idFilter, setIdFilter] = useState('');
 
   useEffect(( )=>{
     let productsPromise = api.get('products');
@@ -54,7 +55,13 @@ export function Orders(props: { handleSetOrder: any; }) {
     handleSetOrder([]);
   }
 
-  let orders = orderList.map((item) => {
+  function useFilters():Order[]  {
+    let result = orderList.filter(item => item._id.toLowerCase().includes(idFilter.toLowerCase()));
+
+    return result;
+  }
+
+  let orders = useFilters().map((item) => {
     return <div className="list_item" key={item._id}>
       <div className="section">Order №: {item._id}</div>
       <div className="section">Product: {productList.find(product => product._id === item.product_id)?.name || "Product Unlisted"}</div>
@@ -79,6 +86,15 @@ export function Orders(props: { handleSetOrder: any; }) {
 
   return <div className="orders_list">
       <div className="buttons-container">
+        <div className="filters-container">
+        <input
+          className='text-input input'
+          type="text"
+          value={idFilter}
+          placeholder='Search by order number'
+          onChange={(e) => setIdFilter(e.target.value)}
+        />
+      </div>
         <button
           onClick={() => setOpenForm(!openForm)}
           >{openForm ? "Product List" : "Create Order"}</button>

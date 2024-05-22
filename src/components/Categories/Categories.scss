@@ -20,9 +20,24 @@
 
   .buttons-container {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     margin-bottom: 10px;
     padding: 0 5px;
+
+    .filters-container {
+      display: flex;
+      align-items: center;
+
+      .text-input {
+        margin-right: 10px;
+      }
+
+      .input {
+        border-radius: 5px;
+        height: 20px;
+        outline: none;
+      }
+    }
   }
 
   .list-container {

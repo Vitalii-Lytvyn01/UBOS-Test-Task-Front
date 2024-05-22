@@ -13,9 +13,10 @@ export function Products(props: { handleSetOrder: any; }) {
   const [openForm, setOpenForm] = useState(false);
   const [actionCategory, setActionCategory] = useState("Edit");
   const [editProduct, setEditProduct] = useState<Product>();
+  const [nameFilter, setNameFilter] = useState('');
+  const [categoryFilter,setCategoryFilter] = useState('none');
 
   useEffect(() => {
-    console.log('useEffect');
     let productsPromise = api.get('products');
     let categoriesPromise = api.get('categories');
 
@@ -74,7 +75,14 @@ export function Products(props: { handleSetOrder: any; }) {
     }
   }
 
-  const products = productList.map(item => 
+  function useFilters():Product[]  {
+    let result = productList.filter(item => item.name.toLowerCase().includes(nameFilter.toLowerCase()));
+    result = categoryFilter === 'none' ? result : result.filter(item => item.category_id === categoryFilter);
+
+    return result;
+  }
+
+  const products = useFilters().map(item => 
   <div 
     className='list_item'
     key={item._id}
@@ -97,6 +105,27 @@ export function Products(props: { handleSetOrder: any; }) {
 
   return <div className="products_list">
       <div className="buttons-container">
+        <div className="filters-container">
+          <input
+            className='text-input input'
+            type="text"
+            value={nameFilter}
+            placeholder='Search by name'
+            onChange={(e) => setNameFilter(e.target.value)}
+          />
+          <select
+            className='input'
+            name="categoryFilter"
+            id="categoryFilter"
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+          >
+            <option value="none">None</option>
+            {categoryList.map(item => {
+              return <option value={item._id}>{item.name}</option>
+            })}
+          </select>
+        </div>
         <button
           onClick={() => handleOpenEdit(undefined,"Add")}
           >{openForm ? "Product List" : "Add Product"}</button>
