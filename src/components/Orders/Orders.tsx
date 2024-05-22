@@ -36,7 +36,7 @@ export function Orders(props: { handleSetOrder: any; }) {
       const quantityInput = inputs.querySelector(`input[name="${item._id}"]`) as HTMLInputElement;
       api.post('orders', {
         "product_id": item._id,
-        "quantity": quantityInput.value,
+        "quantity": parseInt(quantityInput.value),
         "customer": customerInput.value,
         "cost": item.price * parseInt(quantityInput.value),
         "date": event.toISOString()
